@@ -1,109 +1,83 @@
-﻿/*Задача 10: Напишите программу, которая принимает на вход трёхзначное число и на выходе показывает вторую цифру этого числа.
+﻿
+//Задача 41: Пользователь вводит с клавиатуры числа через запятую. Посчитайте, сколько чисел больше 0 ввёл пользователь. 0, 7, 8, -2, -2 -> 2 -1, -7, 567, 89, 223-> 3
 
-456 -> 5
-782 -> 8
-918 -> 1*/
-
-
-int number = ReadInt("Введите трехзначное число: ");
-int amount = number.ToString().Length;
-
-if (amount < 3 || amount > 3)
+Console.Write("Введите числа через запятую: ");
+int[] numbers = StringToNum(Console.ReadLine());
+PrintArray(numbers);
+int sum = 0;
+for (int i = 0; i < numbers.Length; i++)
 {
-    Console.WriteLine("Вы ввели не трехзначное число");
-}
-else
-{
-    Console.WriteLine(InCenter(number));
-}
-
-
-
-
-int ReadInt(string message)
-{
-    Console.Write(message);
-    return Convert.ToInt32(Console.ReadLine());
-}
-
-
-int InCenter(int a)
-{
-
-    int result = ((a / 10) % 10);
-    return result;
-}
-
-// /*Задача 13: Напишите программу, которая выводит третью цифру заданного числа или сообщает, что третьей цифры нет.
-
-// 645 -> 5
-
-// 78 -> третьей цифры нет
-
-//32679 -> 6
-
-int number = ReadInt("Введите число: ");
-int count = number.ToString().Length;
-Console.Write(MakeArray(number, count));
-
-
-int ReadInt(string message)
-{
-    Console.Write(message);
-    return Convert.ToInt32(Console.ReadLine());
-}
-
-int MakeArray(int a, int b)
-{
-    int result = 0;
-    if (b < 3)
+    if (numbers[i] > 0)
     {
-        Console.Write("Третьей цифры нет ");
+        sum++;
     }
-    else
+}
+Console.WriteLine();
+Console.WriteLine($"количество значений больше 0 = {sum}");
+
+
+int[] StringToNum(string input)
+{
+    int count = 1;
+    for (int i = 0; i < input.Length; i++)
     {
-        int c = 1;
-        for (int i = b; i > 3; i--)
+        if (input[i] == ',')
         {
-            c = c * 10;
+            count++;
         }
-
-        result = (a / c) % 10;
     }
-    return result;
-}
 
-// Задача 15: 
-// Напишите программу, которая принимает на вход цифру, обозначающую день недели, и проверяет, является ли этот день выходным.
-// 6 -> да
-// 7 -> да
-// 1 -> нет
-// */
+    int[] numbers = new int [count];
+    int index = 0;
 
-int dayNumber = ReadInt("Введите число от 1 до 7: ");
-Console.WriteLine(WorkHoliday(dayNumber));
-int ReadInt(string message)
-{
-    Console.Write(message);
-    return Convert.ToInt32(Console.ReadLine());
-}
-
-string WorkHoliday(int a)
-{
-    if (a > 0 && a < 8)
+    for (int i = 0; i < input.Length; i++)
     {
-        if (a == 7 || a == 6)
+        string temp = "";
+
+        while (input [i] != ',')
         {
-            Console.Write("Под цифрой " + a + " - Выходной");
+        if(i != input.Length - 1)
+        {
+            temp += input [i].ToString();
+            i++;
         }
         else
         {
-            Console.Write("Под цифрой " + a + " - Рабочий");
+            temp += input [i].ToString();
+            break;
         }
+        }
+        numbers[index] = Convert.ToInt32(temp);
+        index++;
     }
-    else
-    {
-        Console.Write("Вы ввели число не в пределах от 1 до 7, поэтому не возможно определить");
-    }
-    return " день.";
+    return numbers;
 }
+
+
+void PrintArray(int[] array)
+{
+    Console.Write("[ ");
+    for (int i = 0; i < array.Length; i++)
+    {
+        Console.Write(array[i] + " ");
+    }
+    Console.Write("]");
+}
+
+
+// Задача 43. Напишите программу, которая найдёт точку пересечения двух прямых, 
+// заданных уравнениями y = k1 * x + b1 y = k2 * x + b2 значения b1, k1, b2 и k2 задаются пользователем.
+
+Console.WriteLine("введите значение b1");
+double b1 = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("введите число k1");
+double k1 = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("введите значение b2");
+double b2 = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("введите число k2");
+double k2 = Convert.ToInt32(Console.ReadLine());
+
+double x = (-b2 + b1)/(-k1 + k2);
+double y = k2 * x + b2;
+
+Console.WriteLine($"две прямые пересекутся в точке с координатами X: {x}, Y: {y}");
